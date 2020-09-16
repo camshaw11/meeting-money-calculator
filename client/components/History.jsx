@@ -8,6 +8,7 @@ import { APIgetPastMeetings } from '../apis/index.js'
 
 class History extends React.Component {
   state = {
+<<<<<<< HEAD
     details: {},
   }
 
@@ -15,6 +16,9 @@ class History extends React.Component {
     APIgetPastMeetings(this.props.id).then(deets => {
       this.setState({ details: deets })
     })
+=======
+    page: ""
+>>>>>>> e057fc39a50ae8f13ea528732b615e11cba004e9
   }
 
   render() {
