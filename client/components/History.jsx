@@ -1,9 +1,22 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import PastMeeting from './PastMeeting'
+import PastMeeting from "./PastMeeting"
+
+import { APIgetPastMeetings } from '../apis/index.js'
+
 
 class History extends React.Component {
+  state = {
+    details: {},
+  }
+
+  componentDidMount() {
+    APIgetPastMeetings(this.props.id).then(deets => {
+      this.setState({ details: deets })
+    })
+  }
+
   render() {
     return (
       <div className="container">
@@ -19,7 +32,8 @@ class History extends React.Component {
           </header>
           <div className="card-content">
             <div className="content">
-              <PastMeeting id={1} />Details{"\n"}
+              <PastMeeting id={1} />
+              Details{"\n"}
               <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
             </div>
           </div>

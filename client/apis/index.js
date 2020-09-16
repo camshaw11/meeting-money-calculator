@@ -18,3 +18,14 @@ export function APIgetMeetingDetails(id) {
     })
     .catch(err => console.log(err))
 }
+
+// gets all past meetings by id
+export function APIgetPastMeetings(id) {
+  return request.get(apiUrl + "/history/" + id)
+    .set(jsonHeader)
+    .set(authHeader)
+    .then(res => {
+      return res.body
+    })
+    .catch(err => console.log(err))
+}
