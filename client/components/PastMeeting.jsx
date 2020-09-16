@@ -4,17 +4,13 @@ import { connect } from "react-redux"
 import { APIgetMeetingDetails } from '../apis/index.js'
 
 class PastMeeting extends React.Component {
+  state = {
+    details: {}
+  }
 
-  // gets meeting deets by id
-  // let meetingDetails = APIgetMeetingById(this.props.id)
-
-  // test what it looks like
-  // console.log(meetingDetails)
-
-  //this.props.id
   componentDidMount() {
     APIgetMeetingDetails(this.props.id).then(deets => {
-      return console.log(deets)
+      this.setState({ details: deets })
     })
   }
 
@@ -22,16 +18,16 @@ class PastMeeting extends React.Component {
     return (
       <div className="container">
         <h2 className="title is-3">Meeting Details</h2>
-        <h4 className="title is-3">Name: </h4>
-        <h4 className="title is-4">[date]</h4>
-        <h4 className="title is-3">Cost: </h4>
-        <h4 className="title is-3">Duration: </h4>
+        <h4 className="title is-3">{this.state.details.meeting_name}</h4>
+        <h4 className="title is-4">{this.state.details.created_at}</h4>
+        <h4 className="title is-3">Cost: {this.state.details.cost}</h4>
+        <h4 className="title is-3">Duration: {this.state.details.duration}</h4>
         <h4 className="title is-4">Attendees: </h4>
-        {/* get meeting name */}
-        {/* get meeting date */}
-        {/* //get meeting cost and duration */}
-        {/* get list of users in this particular meeting via meeting ID */}
-
+        <ul>
+          {/* {this.state.details.attendee_details.map(attendee => {
+            return <li>{attendee.first_name} {attendee.last_name} (${attendee.hourly_wage} p/hr)</li>
+          })} */}
+        </ul>
       </div>
     )
   }
