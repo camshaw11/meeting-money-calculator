@@ -100,6 +100,7 @@ As a user:
 | Post | /api/v1/register | Yes | Register a User | The Users JWT Token |
 | Get | /api/v1/meetings | Yes | Get a Users Meeting Histroy | An Array of Meetings |
 | Post | /api/v1/meetings | Yes | Save a completed meeting | The Meeting that has been saved in db read format |
+| Get | /api/v1/meetings/:id | Yes | Get the details of a Meeting | A meeting object |
 | Get | /api/v1/meetings/:id/users | Yes | Get the attendees of a Meeting | An Array of User objects |
 | Get | /api/v1/users | Yes | Get the users of the app | An Array of User Objects |
 
