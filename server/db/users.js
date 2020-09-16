@@ -1,8 +1,9 @@
+// Authenticare Defined User functions
 const connection = require('./connection')
 const { generateHash } = require('authenticare/server')
 
 function createUser (user, db = connection) {
-  const newUser = {...user}
+  const newUser = { ...user }
   return generateHash(newUser.password)
     .then(passwordHash => {
       newUser.hash = passwordHash
