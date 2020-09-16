@@ -35,29 +35,26 @@ function saveCompletedMeeting (req, res) {
     attendees.map(attendee_id => {
       return db.saveAttendance(meeting_id, attendee_id).then(result => result)
     })
-    res.json({
-      ok: true,
-      meeting_id,
-      message: 'Meeting Saved Successfully'
-    })
+    db.getMeetingDetails(meeting_id)
+      .then(meeting => {
+        db.getAttendeeInfo(meeting_id)
+          .then(attendees=>{
+            meeting.attendee_details = attendees
+            res.json(meeting)
+          })
+      })
   })
 }
 
 function getMeetingDetails (req, res) {
   db.getMeetingDetails(req.params.id).then(meeting => {
-    res.json({
-      ok: true,
-      meeting
-    })
+    res.json(meeting)
   })
 }
 
 function getMeetingAttendees (req, res) {
   db.getAttendeeInfo(req.params.id).then(attendees => {
-    res.json({
-      ok: true,
-      attendees
-    })
+    res.json(attendees)
   })
 }
 
