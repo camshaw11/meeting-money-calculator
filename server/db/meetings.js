@@ -1,4 +1,3 @@
-const { insert } = require('./connection')
 const connection = require('./connection')
 
 module.exports = {
@@ -12,11 +11,15 @@ function getMeetingHistory (userId, db = connection) {
     .where('attendees.user_id', userId)
     .join('meetings', 'attendees.meeting_id', 'meetings.id')
     .orderBy('meetings.created_at', 'asc')
-    .select()
+    .select('attendees.meeting_id')
+    .select('meetings.meeting_name')
+    .select('meetings.attendees')
+    .select('meetings.cost')
+    .select('meetings.created_at')
 }
 
 function saveMeeting(meeting, db = connection){
-  return db('meeting')
+  return db('meetings')
     .insert(meeting)
 }
 

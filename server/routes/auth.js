@@ -29,7 +29,19 @@ function saveCompletedMeeting (req, res){
   const meeting = req.body.meeting
   const attendees = req.body.attendees
   meeting.attendees = attendees.length
-  console.log(meeting, attendees)
+  
+  db.saveMeeting(meeting)
+    .then(([meeting_id]) => {
+      attendees.map(attendee_id => {
+        return db.saveAttendance(meeting_id, attendee_id)
+          .then(result => result)
+      })
+      res.json({
+        ok: true,
+        meeting_id,
+        message: 'Meeting Saved Successfully'
+      })
+    })
   
 }
 
