@@ -1,11 +1,11 @@
 import { getUserTokenInfo, isAuthenticated, removeUser } from '../utils/auth'
 import { login, register } from '../apis/auth'
 
-export function togglePage(page, id) {
+export function togglePage(currentPage, currentId) {
   return {
     type: 'TOGGLE_PAGE',
-    page: page,
-    id: id
+    currentPage: currentPage,
+    currentId: currentId
   }
 }
 

@@ -7,22 +7,15 @@ import { APIgetPastMeetings } from '../apis/index.js'
 import { togglePage } from '../actions/auth.js'
 
 class History extends React.Component {
-
-  togglePage = (id) => {
-    this.state.page === "list"
-      ? this.setState({ currentMeetingId: id, page: "details" })
-      : this.setState({ currentMeetingId: id, page: "list" })
-  }
-
   componentDidMount() {
-    APIgetPastMeetings(this.props.auth.id).then(deets => {
+    APIgetPastMeetings().then(deets => {
       this.setState({ details: deets })
     })
   }
 
   render() {
     return (
-      this.props.auth.page === "list"
+      this.props.page.currentPage === "list"
         ?
         <div className="container">
           <h2 className="title is-2">Meeting history</h2>
@@ -44,14 +37,14 @@ class History extends React.Component {
           </div>
         </div>
         :
-        <PastMeeting id={this.props.aid} />
+        <PastMeeting id={this.props.page.currentId} />
     )
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ page }) => {
   return {
-    auth
+    page
   }
 }
 
