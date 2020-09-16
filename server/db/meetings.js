@@ -5,7 +5,8 @@ module.exports = {
   saveMeeting,
   saveAttendance,
   getAttendeeInfo,
-  getAllUsers
+  getAllUsers,
+  getMeetingDetails
 }
 
 function getMeetingHistory (userId, db = connection) {
@@ -45,4 +46,15 @@ function getAllUsers (db = connection) {
     .select('username')
     .select('first_name')
     .select('last_name')
+}
+
+function getMeetingDetails (meeting_id, db = connection) {
+  return db('meetings')
+    .where('id', meeting_id)
+    .first('id as meeting_id')
+    .first('meeting_name')
+    .first('duration')
+    .first('attendees')
+    .first('cost')
+    .first('created_at')
 }

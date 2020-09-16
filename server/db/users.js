@@ -2,8 +2,8 @@ const connection = require('./connection')
 const { generateHash } = require('authenticare/server')
 
 function createUser (user, db = connection) {
-  console.log("CREATEUSER=================================")
-  const newUser = {...user}
+  console.log('CREATEUSER=================================')
+  const newUser = { ...user }
   return generateHash(newUser.password)
     .then(passwordHash => {
       newUser.hash = passwordHash
