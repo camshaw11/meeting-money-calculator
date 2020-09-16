@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import Counter from "./counter";
+
+state = {
+  count: 0,
+};
 
 function Meeting(props) {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="container">
       <h2 className="title is-2">Start Meeting</h2>
 
       <h2>the current count is: {count}</h2>
-      <button onClick={counter()}>Click me</button>
+      <button onClick={Counter}>Click me</button>
     </div>
   );
 }
-
-const counter = (props) => {
-  const { startCount } = this.props;
-  this.setState({
-    count: startCount,
-  });
-  setInterval(this.setState(count + 1), 1000);
-};
 
 // componentDidMount () {
 //   const {startCount} = this.props
