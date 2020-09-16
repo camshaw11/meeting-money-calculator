@@ -1,6 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 
+import PastMeeting from './PastMeeting'
+
 class History extends React.Component {
   render() {
     return (
@@ -17,7 +19,7 @@ class History extends React.Component {
           </header>
           <div className="card-content">
             <div className="content">
-              <p>Details{"\n"}</p>
+              <PastMeeting id={1} />Details{"\n"}
               <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
             </div>
           </div>
