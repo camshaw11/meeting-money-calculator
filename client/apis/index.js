@@ -2,7 +2,6 @@ import request from 'superagent'
 
 import { getEncodedToken } from 'authenticare/client'
 
-//
 const jsonHeader = { 'Accept': 'application/json' }
 const authHeader = { 'Authorization': `Bearer ${getEncodedToken()}` }
 
