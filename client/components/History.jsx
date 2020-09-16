@@ -1,7 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import PastMeeting from './PastMeeting'
+import PastMeeting from "./PastMeeting"
+
+import { APIgetPastMeetings } from '../apis/index.js'
+
 
 class History extends React.Component {
   state = {
@@ -13,6 +16,12 @@ class History extends React.Component {
     this.state.page === "list"
       ? this.setState({ currentMeetingId: id, page: "details" })
       : this.setState({ currentMeetingId: id, page: "list" })
+  }
+
+  componentDidMount() {
+    APIgetPastMeetings(this.props.id).then(deets => {
+      this.setState({ details: deets })
+    })
   }
 
   render() {
