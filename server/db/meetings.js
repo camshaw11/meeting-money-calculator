@@ -4,7 +4,8 @@ module.exports = {
   getMeetingHistory,
   saveMeeting,
   saveAttendance,
-  getAttendeeInfo
+  getAttendeeInfo,
+  getAllUsers
 }
 
 function getMeetingHistory (userId, db = connection) {
@@ -19,17 +20,15 @@ function getMeetingHistory (userId, db = connection) {
     .select('meetings.created_at')
 }
 
-function saveMeeting(meeting, db = connection){
-  return db('meetings')
-    .insert(meeting)
+function saveMeeting (meeting, db = connection) {
+  return db('meetings').insert(meeting)
 }
 
-function saveAttendance(meetingId, attendeeId, db = connection){
-  return db('attendees')
-    .insert({meeting_id: meetingId, user_id: attendeeId})
+function saveAttendance (meetingId, attendeeId, db = connection) {
+  return db('attendees').insert({ meeting_id: meetingId, user_id: attendeeId })
 }
 
-function getAttendeeInfo(meetingId, db=connection){
+function getAttendeeInfo (meetingId, db = connection) {
   return db('attendees')
     .where('attendees.meeting_id', meetingId)
     .join('users', 'attendees.user_id', 'users.id')
@@ -38,4 +37,12 @@ function getAttendeeInfo(meetingId, db=connection){
     .select('users.first_name')
     .select('users.last_name')
     .select('users.hourly_wage')
+}
+
+function getAllUsers (db = connection) {
+  return db('users')
+    .select('id as user_id')
+    .select('username')
+    .select('first_name')
+    .select('last_name')
 }
