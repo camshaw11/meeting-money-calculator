@@ -47,9 +47,12 @@ function saveCompletedMeeting (req, res) {
 }
 
 function getMeetingDetails (req, res) {
+  // let result = []
   db.getMeetingDetails(req.params.id).then(meeting => {
     res.json(meeting)
+    // result.push(meeting)
   })
+  // res.json(result)
 }
 
 function getMeetingAttendees (req, res) {
