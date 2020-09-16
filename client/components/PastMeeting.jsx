@@ -13,7 +13,7 @@ class PastMeeting extends React.Component {
 
   //this.props.id
   componentDidMount() {
-    APIgetMeetingDetails().then(deets => {
+    APIgetMeetingDetails(this.props.id).then(deets => {
       return console.log(deets)
     })
   }
