@@ -3,7 +3,8 @@ const connection = require('./connection')
 module.exports = {
   getMeetingHistory,
   saveMeeting,
-  saveAttendance
+  saveAttendance,
+  getAttendeeInfo
 }
 
 function getMeetingHistory (userId, db = connection) {
@@ -26,4 +27,15 @@ function saveMeeting(meeting, db = connection){
 function saveAttendance(meetingId, attendeeId, db = connection){
   return db('attendees')
     .insert({meeting_id: meetingId, user_id: attendeeId})
+}
+
+function getAttendeeInfo(meetingId, db=connection){
+  return db('attendees')
+    .where('attendees.meeting_id', meetingId)
+    .join('users', 'attendees.user_id', 'users.id')
+    .select('attendees.user_id')
+    .select('users.username')
+    .select('users.first_name')
+    .select('users.last_name')
+    .select('users.hourly_wage')
 }
