@@ -11,6 +11,7 @@ class PastMeeting extends React.Component {
   // test what it looks like
   // console.log(meetingDetails)
 
+  //this.props.id
   componentDidMount() {
     APIgetMeetingDetails().then(deets => {
       return console.log(deets)

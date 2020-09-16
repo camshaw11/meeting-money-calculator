@@ -8,7 +8,7 @@ function History(props) {
     <div className="container">
       <h2 className="title is-2">Meeting history</h2>
 
-      <PastMeeting />
+      <PastMeeting id={1} />
 
     </div>
   )
