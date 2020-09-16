@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { APIgetMeetingDetails } from '../apis/index.js'
+import { togglePage } from '../actions/auth.js'
 
 class PastMeeting extends React.Component {
   state = {
@@ -18,6 +19,7 @@ class PastMeeting extends React.Component {
     return (
       <div className="container">
         <h2 className="title is-2">Meeting Details</h2>
+        <button onClick={() => this.props.dispatch(togglePage("list", 1))}>Deetz</button>
         <h4 className="title is-3">{this.state.details.meeting_name}</h4>
         <h4 className="title is-4">{this.state.details.created_at}</h4>
         <h4 className="title is-4">Cost: ${this.state.details.cost}</h4>

@@ -1,6 +1,14 @@
 import { getUserTokenInfo, isAuthenticated, removeUser } from '../utils/auth'
 import { login, register } from '../apis/auth'
 
+export function togglePage(page, id) {
+  return {
+    type: 'TOGGLE_PAGE',
+    page: page,
+    id: id
+  }
+}
+
 export function requestLogin() {
   return {
     type: 'LOGIN_REQUEST',
@@ -67,7 +75,6 @@ export function logoutUser(confirmSuccess) {
 }
 
 export function registerUserRequest(creds, confirmSuccess) {
-  console.log("registerUserRequest==========================")
   return (dispatch) => {
     register(creds)
       .then(userInfo => {

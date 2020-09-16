@@ -4,13 +4,9 @@ import { connect } from "react-redux"
 import PastMeeting from "./PastMeeting"
 
 import { APIgetPastMeetings } from '../apis/index.js'
-
+import { togglePage } from '../actions/auth.js'
 
 class History extends React.Component {
-  state = {
-    page: "list",
-    currentMeetingId: 0,
-  }
 
   togglePage = (id) => {
     this.state.page === "list"
@@ -19,14 +15,14 @@ class History extends React.Component {
   }
 
   componentDidMount() {
-    APIgetPastMeetings(this.props.id).then(deets => {
+    APIgetPastMeetings(this.props.auth.id).then(deets => {
       this.setState({ details: deets })
     })
   }
 
   render() {
     return (
-      this.state.page === "list"
+      this.props.auth.page === "list"
         ?
         <div className="container">
           <h2 className="title is-2">Meeting history</h2>
@@ -41,20 +37,25 @@ class History extends React.Component {
             </header>
             <div className="card-content">
               <div className="content">
-                {/* meeting.id taken from a map */}
-                <button onClick={this.togglePage(meeting.id)}>Deetz</button>
+                <button onClick={() => this.props.dispatch(togglePage("details", 1))}>Deetz</button>
                 <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
               </div>
             </div>
           </div>
         </div>
         :
-        <PastMeeting id={this.state.currentMeetingId} />
+        <PastMeeting id={this.props.aid} />
     )
   }
 }
 
-export default connect()(History)
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth
+  }
+}
+
+export default connect(mapStateToProps)(History)
 
 // this needs to go on the index page ->
 {
