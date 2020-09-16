@@ -43,29 +43,28 @@ function saveCompletedMeeting (req, res) {
 }
 
 function getMeetingAttendees (req, res) {
-  db.getAttendeeInfo(req.params.id)
-    .then(attendees => {
-      res.json({
-        ok: true,
-        attendees
-      })
+  db.getAttendeeInfo(req.params.id).then(attendees => {
+    res.json({
+      ok: true,
+      attendees
     })
+  })
 }
 
 function getAppUsers (req, res) {
-  console.log('getAppUsers')
+  db.getAllUsers().then(users => {
+    res.json(users)
+  })
 }
 
 function userError (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.status(401).json({ ok: false, message: 'Access denied.' })
   }
-  res
-    .status(500)
-    .json({
-      ok: false,
-      message: 'Something went wrong, please contact your administrator.'
-    })
+  res.status(500).json({
+    ok: false,
+    message: 'Something went wrong, please contact your administrator.'
+  })
 }
 
 module.exports = router
