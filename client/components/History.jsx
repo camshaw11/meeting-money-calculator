@@ -28,3 +28,8 @@ class History extends React.Component {
 }
 
 export default connect()(History)
+
+// this needs to go on the index page ->
+{
+  /* <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> */
+}
