@@ -19,39 +19,40 @@ router.get('/users', getTokenDecoder(), getAppUsers)
 
 router.use(userError)
 
-function getUsersMeetingHistory (req, res){
-  db.getMeetingHistory(req.user.id)
-    .then(meetings=>{
-      res.json(meetings)
-    })
+function getUsersMeetingHistory (req, res) {
+  db.getMeetingHistory(req.user.id).then(meetings => {
+    res.json(meetings)
+  })
 }
-function saveCompletedMeeting (req, res){
+
+function saveCompletedMeeting (req, res) {
   const meeting = req.body.meeting
   const attendees = req.body.attendees
   meeting.attendees = attendees.length
-  
-  db.saveMeeting(meeting)
-    .then(([meeting_id]) => {
-      attendees.map(attendee_id => {
-        return db.saveAttendance(meeting_id, attendee_id)
-          .then(result => result)
-      })
+
+  db.saveMeeting(meeting).then(([meeting_id]) => {
+    attendees.map(attendee_id => {
+      return db.saveAttendance(meeting_id, attendee_id).then(result => result)
+    })
+    res.json({
+      ok: true,
+      meeting_id,
+      message: 'Meeting Saved Successfully'
+    })
+  })
+}
+
+function getMeetingAttendees (req, res) {
+  db.getAttendeeInfo(req.params.id)
+    .then(attendees => {
       res.json({
         ok: true,
-        meeting_id,
-        message: 'Meeting Saved Successfully'
+        attendees
       })
     })
-  
 }
 
-function saveMeetingAttendees (req,res){
-
-}
-function getMeetingAttendees (req, res){
-  console.log('getMeetingAttendees')
-}
-function getAppUsers (req, res){
+function getAppUsers (req, res) {
   console.log('getAppUsers')
 }
 
@@ -59,8 +60,12 @@ function userError (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.status(401).json({ ok: false, message: 'Access denied.' })
   }
-  res.status(500).json({ok: false, message: 'Something went wrong, please contact your administrator.'})
+  res
+    .status(500)
+    .json({
+      ok: false,
+      message: 'Something went wrong, please contact your administrator.'
+    })
 }
-
 
 module.exports = router
