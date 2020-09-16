@@ -14,6 +14,7 @@ applyAuthRoutes(router, {
 
 router.get('/meetings', getTokenDecoder(), getUsersMeetingHistory)
 router.post('/meetings', getTokenDecoder(), saveCompletedMeeting)
+router.get('/meetings/:id', getTokenDecoder(), getMeetingDetails)
 router.get('/meetings/:id/users', getTokenDecoder(), getMeetingAttendees)
 router.get('/users', getTokenDecoder(), getAppUsers)
 
@@ -38,6 +39,15 @@ function saveCompletedMeeting (req, res) {
       ok: true,
       meeting_id,
       message: 'Meeting Saved Successfully'
+    })
+  })
+}
+
+function getMeetingDetails (req, res) {
+  db.getMeetingDetails(req.params.id).then(meeting => {
+    res.json({
+      ok: true,
+      meeting
     })
   })
 }
