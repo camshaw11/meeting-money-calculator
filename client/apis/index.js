@@ -19,8 +19,8 @@ export function APIgetMeetingDetails(id) {
 }
 
 // gets all past meetings by id
-export function APIgetPastMeetings(id) {
-  return request.get(apiUrl + "/history/" + id)
+export function APIgetPastMeetings() {
+  return request.get(apiUrl + "/meetings")
     .set(jsonHeader)
     .set(authHeader)
     .then(res => {
