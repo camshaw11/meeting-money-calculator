@@ -4,6 +4,10 @@ import { connect } from "react-redux"
 import PastMeeting from './PastMeeting'
 
 class History extends React.Component {
+  state = {
+    page: ""
+  }
+
   render() {
     return (
       <div className="container">
