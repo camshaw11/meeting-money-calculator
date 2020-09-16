@@ -3,7 +3,6 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   errorMessage: '',
-  page: "list"
 }
 
 export default function auth(state = initialState, action) {
