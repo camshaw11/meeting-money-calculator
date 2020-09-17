@@ -21,7 +21,7 @@ class Counter extends React.Component {
     this.startTimer();
 
     APIgetMeetingDetails(this.props.meeting.meeting_id).then((details) => {
-      const startTime = new Date(details.created_at).getTime() + 43200;
+      const startTime = new Date(details.created_at).getTime();
       this.setState(
         {
           details: details,
@@ -111,6 +111,20 @@ class Counter extends React.Component {
                 <h2 className="title">${this.state.cost.toFixed(2)}</h2>
 
                 <form onSubmit={this.handleSubmit}>
+                  <div className="field">
+                    <div className="control">
+                      <div className="columns is-centered">
+                        <div className="column is-half">
+                          <textarea
+                            type="text"
+                            className="textarea is-primary"
+                            placeholder="Meeting Details"
+                            rows="5"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <button className="button is-danger is-outlined my-3">
                     End Meeting
                   </button>
