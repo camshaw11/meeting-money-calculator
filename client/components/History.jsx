@@ -28,9 +28,13 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-          <h2 className="title is-2">Meeting Overview</h2>
+          {this.state.details.length > 0 &&
+            <>
+              <h2 className="title is-2">Meeting Overview</h2>
+              <Graph limit={true} />
+            </>
+          }
 
-          <Graph limit={true} />
           {
             this.props.page.currentPage === "list"
               ?
@@ -53,6 +57,16 @@ class History extends React.Component {
                     </div>
                   )
                 })}
+                {!meeting &&
+                  <>
+                    <div className="card">
+                      <header className="card-header">
+                        <p className="card-header-title is-centered">No Meetings Yet.. Money is safe</p>
+                      </header>
+                    </div>
+                  </>
+
+                }
               </>
               :
               <PastMeeting id={this.props.page.currentId} />
