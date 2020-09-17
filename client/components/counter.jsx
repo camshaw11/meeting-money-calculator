@@ -93,6 +93,9 @@ class Counter extends React.Component {
                 </h1>
                 <h1 className="subtitle">Total Cost of meeting:</h1>
                 <h2 className="title">${this.state.cost.toFixed(2)}</h2>
+                <button className="button is-danger is-outlined my-3">
+                  End Meeting
+                </button>
               </div>
             </section>
           </div>

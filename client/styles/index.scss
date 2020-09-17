@@ -17,6 +17,7 @@
 @import "bulma/sass/layout/hero.sass";
 @import "bulma/sass/layout/section.sass";
 @import "bulma/sass/components/card.sass";
+@import "bulma/sass/components/modal.sass";
 
 // Graph Style
 
@@ -27,9 +28,34 @@
   width: auto;
 }
 
+.detailGraph {
+  width: 100%;
+}
+
 .custom-tooltip {
   background-color: rgba(255,255,255,0.9);
   border: solid 1px #00d1b2;
   border-radius: 5px;
   padding: 1em;
+}
+
+#navbarMenuHeroA {
+  background-color: #00d1b2;
+}
+.navbar-item {
+  &:focus {
+    background-color: #4DB99C !important;
+  }
+}
+
+.section {
+  padding: 0;
+}
+
+.bodyContent {
+  padding: 1.5rem;
+}
+
+.card {
+  margin-bottom: 1.5rem;
 }

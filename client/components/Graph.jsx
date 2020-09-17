@@ -7,7 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
+  Legend, ResponsiveContainer
 } from "recharts";
 
 import { getGraphDetails } from "../apis";
@@ -40,7 +40,7 @@ class Graph extends React.Component {
 
   CustomTooltip =({ payload, label, active }) => {
     
-    if (active) {
+    if (active && payload[0]) {
       return (
         <div className="custom-tooltip">
           <p className="label">{`Date: ${payload[0].payload.date}`}</p>
@@ -54,25 +54,33 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <div className="graph">
-        <LineChart
-          width={600}
-          height={300}
-          data={this.state.data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey='date' domain={[0, 'dataMax']}/>
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip content={this.CustomTooltip} />
-          <Line
-            type="monotone"
-            dataKey="cost"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </div>
+      <>
+      {this.state.data.length > 0 &&
+        <div className="graph">
+          <ResponsiveContainer height={300} width='100%'>
+          <LineChart
+            className="detailGraph"
+            data={this.state.data}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey='date' domain={[0, 'dataMax']}/>
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip content={this.CustomTooltip} />
+            <Line
+              type="monotone"
+              dataKey="cost"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+          </ResponsiveContainer>
+        </div>
+      }
+      {!this.state.data.length > 0 &&
+        <h1>No meetings yet... The companies money is safe.</h1>
+      }
+      </>
     );
   }
 }

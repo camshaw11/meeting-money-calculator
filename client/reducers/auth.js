@@ -2,10 +2,10 @@ const initialState = {
   isFetching: false,
   isAuthenticated: false,
   user: {},
-  errorMessage: ''
+  errorMessage: '',
 }
 
-export default function auth (state = initialState, action) {
+export default function auth(state = initialState, action) {
   switch (action.type) {
     case 'LOGIN_REQUEST':
       return {
@@ -48,6 +48,12 @@ export default function auth (state = initialState, action) {
         isFetching: false,
         isAuthenticated: false,
         errorMessage: action.message
+      }
+    case 'TOGGLE_PAGE':
+      return {
+        ...state,
+        page: action.page,
+        id: action.id
       }
     default:
       return state

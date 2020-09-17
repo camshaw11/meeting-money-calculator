@@ -7,8 +7,9 @@ import Register from "./Register";
 import Nav from "./Nav";
 import Meeting from "./Meeting";
 import History from "./History";
+import Form from "./Form";
 import { checkAuth } from "../actions/auth";
-import Graph from './Graph'
+import Graph from "./Graph";
 
 export class App extends React.Component {
   componentDidMount() {
@@ -30,9 +31,9 @@ export class App extends React.Component {
             </div>
           </div>
 
-          <div className="">
+          <div className="bodyContent">
             {auth.isAuthenticated ? (
-              <Route exact path="/" component={Meeting} />
+              <Route exact path="/" component={History} />
             ) : (
               <Route exact path="/" component={Login} />
             )}
@@ -41,7 +42,13 @@ export class App extends React.Component {
             <Route path="/register" component={Register} />
             <Route path="/meeting" component={Meeting} />
             <Route path="/history" component={History} />
-            <Route path="/graph"><Graph limit={false} /></Route> 
+            <Route path="/form" component={Form} />
+            <Route path="/graph">
+              <>
+                <h1 className="title is-2">Company Wide Cost Analysis Graph</h1>
+                <Graph limit={false} />
+              </>
+            </Route>
           </div>
         </div>
       </Router>

@@ -1,3 +1,4 @@
+const { insert } = require('./connection')
 // Define DB Functions for Handling Meetings
 
 // Require Database configuration
@@ -12,7 +13,8 @@ module.exports = {
   getAllUsers,
   getMeetingDetails,
   getGraphData,
-  getUserGraphData
+  getUserGraphData,
+  updateMeeting
 }
 
 // Accepts Integer(UserId)
@@ -30,24 +32,34 @@ function getMeetingHistory (userId, db = connection) {
   return db('attendees')
     .where('attendees.user_id', userId)
     .join('meetings', 'attendees.meeting_id', 'meetings.id')
-    .orderBy('meetings.created_at', 'asc')
+    .orderBy('meetings.created_at', 'desc')
     .select('attendees.meeting_id')
     .select('meetings.meeting_name')
     .select('meetings.attendees')
     .select('meetings.cost')
     .select('meetings.created_at')
+    .catch(err => err)
 }
 
 // Accepts formatted meeting Object { String(meeting_name), Integer(duration), Integer(attendees), Decimal(cost) }
 // Inserts provided meeting into database, returns inserted records ID
 function saveMeeting (meeting, db = connection) {
-  return db('meetings').insert(meeting)
+  return db('meetings').insert(meeting).catch(err => err)
+}
+
+// Accepts Integer(meetingId), Object(meeting) with details to be updated
+// Updates the meeting with the provided details with the provided meeting id
+function updateMeeting(meetingId, meeting, db=connection){
+  return db('meetings')
+    .where('id', meetingId)
+    .update(meeting)
+    .catch(err => err)
 }
 
 // Accepts two variables Integer(meetingId) and Integer(attendeeId)
 // Inserts attendance record into attendees table
 function saveAttendance (meetingId, attendeeId, db = connection) {
-  return db('attendees').insert({ meeting_id: meetingId, user_id: attendeeId })
+  return db('attendees').insert({ meeting_id: meetingId, user_id: attendeeId }).catch(err => err)
 }
 
 // Accepts Integer(meetingId)
@@ -73,6 +85,7 @@ function getAttendeeInfo (meetingId, db = connection) {
     .select('users.first_name')
     .select('users.last_name')
     .select('users.hourly_wage')
+    .catch(err => err)
 }
 
 // Searches Users table and returns Array of User Objects for all users in first name alphabetical order
@@ -91,6 +104,7 @@ function getAllUsers (db = connection) {
     .select('first_name')
     .select('last_name')
     .select('hourly_wage')
+    .catch(err => err)
 }
 
 // Accepts Integer(meeting_id)
@@ -112,6 +126,7 @@ function getMeetingDetails (meeting_id, db = connection) {
     .first('attendees')
     .first('cost')
     .first('created_at')
+    .catch(err => err)
 }
 
 // Queries DB to return all meetings in date order
@@ -122,6 +137,7 @@ function getGraphData(db=connection){
     .orderBy('created_at', 'asc')
     .select('created_at')
     .select('cost')
+    .catch(err => err)
 }
 
 // Accepts User ID
@@ -135,4 +151,5 @@ function getUserGraphData(userId, db=connection){
     .orderBy('meetings.created_at', 'asc')
     .select('meetings.created_at')
     .select('meetings.cost')
+    .catch(err => err)
 }
