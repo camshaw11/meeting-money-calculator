@@ -15,9 +15,12 @@ class History extends React.Component {
   componentDidMount() {
     APIgetPastMeetings().then(deets => {
       this.setState({ details: deets })
-
     })
   }
+
+  /* <<<<<----- date conversion function for when seconds get passed through, will implement on friday ----->>>>>
+  new Date(this.state.details.duration * 1000).toISOString().substr(11, 8)
+  */
 
   render() {
     let meeting = ''
@@ -28,15 +31,19 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-          
-
+          {/* {this.state.details.length > 0 &&
+            <>
+              <h2 className="title is-2 mt-5">Overview</h2>
+              <Graph limit={true} />
+            </>
+          } */}
           {
             this.props.page.currentPage === "list"
               ?
               <>
                 {this.state.details.length > 0 &&
                   <>
-                    <h2 className="title is-2">Meeting Overview</h2>
+                    <h2 className="title is-2 mt-5">Overview</h2>
                     <Graph limit={true} />
                   </>
                 }
@@ -50,7 +57,7 @@ class History extends React.Component {
                       </header>
                       <div className="card-content">
                         <div className="content">
-                          <button className="button" onClick={() => this.props.dispatch(togglePage("details", info.meeting_id))}>Details</button>
+                          <button className="button is-primary is-light" onClick={() => this.props.dispatch(togglePage("details", 1))}>Details</button>
                         </div>
                       </div>
                       <footer className="card-footer">
@@ -66,15 +73,11 @@ class History extends React.Component {
                       </header>
                     </div>
                   </>
-
                 }
               </>
               :
               <PastMeeting id={this.props.page.currentId} />
-
           }
-
-
         </div >
       </>
     )
