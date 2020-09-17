@@ -32,7 +32,7 @@ export class App extends React.Component {
             </div>
           </div>
 
-          <div className="">
+          <div className="bodyContent">
             {auth.isAuthenticated ? (
               <Route exact path="/" component={History} />
             ) : (
