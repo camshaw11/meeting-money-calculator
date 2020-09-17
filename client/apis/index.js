@@ -18,6 +18,10 @@ export function APIgetMeetingDetails(id) {
     .catch(err => console.log(err))
 }
 
+export function APIgetUsers() {
+  return request.get(apiUrl + "/users")
+}
+
 // gets all past meetings by id
 export function APIgetPastMeetings() {
   return request.get(apiUrl + "/meetings")
@@ -27,9 +31,7 @@ export function APIgetPastMeetings() {
       return res.body
     })
     .catch(err => console.log(err))
-
 }
-
 
 // Get Graph Details
 export function getGraphDetails(limit) {
