@@ -103,6 +103,8 @@ As a user:
 | Get | /api/v1/meetings/:id | Yes | Get the details of a Meeting | A meeting object |
 | Get | /api/v1/meetings/:id/users | Yes | Get the attendees of a Meeting | An Array of User objects |
 | Get | /api/v1/users | Yes | Get the users of the app | An Array of User Objects |
+| Get | /api/v1/graph | Yes | Get graph data for all meetings | an array of date/cost objects |
+| Get | /api/v1/graph/:limit | Yes | Get graph data for logged in user | An array of date/cost objects |
 
 ## DB (Server Side)
   There should be three tables for MVP
