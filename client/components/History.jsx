@@ -28,6 +28,8 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
+          <h2 className="title is-2">Meeting Overview</h2>
+
           <Graph limit={true} />
           {
             this.props.page.currentPage === "list"
@@ -39,19 +41,14 @@ class History extends React.Component {
                     <div className="card">
                       <header className="card-header">
                         <p className="card-header-title">{info.meeting_name}</p>
-                        {/* <a href="#" className="card-header-icon" aria-label="more options">
-                          <span className="icon">
-                            <i className="fas fa-angle-down" aria-hidden="true"></i>
-                          </span>
-                        </a> */}
+                        <time className="card-header-title level-right" dateTime="">Date: {info.created_at}</time>
                       </header>
                       <div className="card-content">
                         <div className="content">
-                          <time dateTime="">Date: {info.created_at}</time>
+                          <button className="button" onClick={() => this.props.dispatch(togglePage("details", 1))}>Details</button>
                         </div>
                       </div>
                       <footer className="card-footer">
-                        <button className="button" onClick={() => this.props.dispatch(togglePage("details", 1))}>Details</button>
                       </footer>
                     </div>
                   )
