@@ -33,7 +33,7 @@ class Nav extends React.Component {
               ? (
                 <>
                   <div className="navbar-start">
-                    <Link className="navbar-item is-large" to='/meeting'>New Meeting</Link>
+                    <Link className="navbar-item is-large" to='/form'>New Meeting</Link>
                     <Link className="navbar-item is-large" to='/history'>Meeting History</Link>
                     <Link className="navbar-item is-large" to='/graph'>Graph</Link>
                   </div>
