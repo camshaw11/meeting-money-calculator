@@ -49,7 +49,7 @@ class History extends React.Component {
               {meeting &&
                 meeting.map((info, i) => {
                   return (
-                    <div className="card">
+                    <div key={i} className="card">
                       <header className="card-header">
                         <p className="card-header-title">{info.meeting_name}</p>
                         <time
@@ -95,8 +95,8 @@ class History extends React.Component {
               )}
             </>
           ) : (
-            <PastMeeting id={this.props.page.currentId} />
-          )}
+              <PastMeeting id={this.props.page.currentId} />
+            )}
         </div>
       </>
     );

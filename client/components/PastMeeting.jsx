@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import moment from 'moment';
+moment().format();
+
 import { APIgetMeetingDetails } from "../apis/index.js";
 import { togglePage } from "../actions/auth.js";
 
@@ -14,10 +17,6 @@ class PastMeeting extends React.Component {
       this.setState({ details: deets });
     });
   }
-
-  /* <<<<<----- date conversion function for when seconds get passed through, will implement on friday----->>>>>
-    new Date(this.state.details.duration * 1000).toISOString().substr(11, 8)
-  */
 
   render() {
     return (
@@ -46,7 +45,8 @@ class PastMeeting extends React.Component {
               </div>
               <div className="column">
                 <h4 className="is-size-5">
-                  Duration: {this.state.details.duration} hours
+                  Duration:{" "}
+                  {this.state.details.duration && durationCalculator(this.state.details.duration)}
                 </h4>
               </div>
               <div className="column">
@@ -72,6 +72,11 @@ class PastMeeting extends React.Component {
       </>
     );
   }
+}
+
+function durationCalculator(durationInMs) {
+  const duration = moment.duration(durationInMs, "milliseconds")
+  return moment.utc(duration.as("milliseconds")).format("HH:mm:ss")
 }
 
 export default connect()(PastMeeting);
