@@ -24,26 +24,22 @@ class PastMeeting extends React.Component {
 
           <header className="card-header">
             <h4 className="card-header-title">{this.state.details.meeting_name}</h4>
+            <time className="card-header-title level-right" dateTime="">Date: {this.state.details.created_at}</time>
           </header>
           <div className="card-content">
             <div className="content">
-              <time dateTime="">Date: {this.state.details.created_at}</time>
               <p>Cost: ${this.state.details.cost}</p>
-              {/* <h4 className="title">Cost: ${this.state.details.cost}</h4> */}
-              <p className="">Duration: {this.state.details.duration}</p>
-              <p className="">Attendees: </p>
-              <ul>
-                {this.state.details.attendee_details &&
-                  this.state.details.attendee_details.map((attendee, idx) =>
-                    <li key={idx}>{attendee.first_name} {attendee.last_name} (${attendee.hourly_wage} p/hr)</li>
-                  )
-                }
-              </ul>
+              <p className="">Duration: {this.state.details.duration} hours</p>
+              <button className="button" onClick={() => this.props.dispatch(togglePage("list", 1))}>Hide</button>
             </div>
 
           </div>
           <footer className="card-footer">
-            <button className="button" onClick={() => this.props.dispatch(togglePage("list", 1))}>List</button>
+            {this.state.details.attendee_details &&
+              this.state.details.attendee_details.map((attendee, idx) =>
+                <p className="card-footer-item" key={idx}>{attendee.first_name} {attendee.last_name} (${attendee.hourly_wage} p/hr)</p>
+              )
+            }
           </footer>
         </div>
       </>
