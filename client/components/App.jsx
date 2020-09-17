@@ -8,6 +8,7 @@ import Nav from "./Nav";
 import Meeting from "./Meeting";
 import History from "./History";
 import { checkAuth } from "../actions/auth";
+import Graph from './Graph'
 
 export class App extends React.Component {
   componentDidMount() {
@@ -40,6 +41,7 @@ export class App extends React.Component {
             <Route path="/register" component={Register} />
             <Route path="/meeting" component={Meeting} />
             <Route path="/history" component={History} />
+            <Route path="/graph"><Graph limit={false} /></Route> 
           </div>
         </div>
       </Router>

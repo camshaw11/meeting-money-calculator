@@ -17,3 +17,12 @@ export function APIgetMeetingDetails(id) {
     })
     .catch(err => console.log(err))
 }
+
+// Get Graph Details
+export function getGraphDetails(limit){
+  return request.get(apiUrl + '/graph' + (limit ? '/' + limit : ''))
+    .set(jsonHeader)
+    .set(authHeader)
+    .then(res => res.body)
+    .catch(err => console.error(err.message))
+}
