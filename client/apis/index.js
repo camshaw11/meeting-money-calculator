@@ -20,6 +20,12 @@ export function APIgetMeetingDetails(id) {
 
 export function APIgetUsers() {
   return request.get(apiUrl + "/users")
+  .set(jsonHeader)
+  .set(authHeader)
+  .then(res => {
+    return res.body
+  })
+  .catch(err => console.log(err))
 }
 
 // gets all past meetings by id
