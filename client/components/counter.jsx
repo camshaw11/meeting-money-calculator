@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { APIgetMeetingDetails } from "../apis/index";
+import { APIgetMeetingDetails, updateCompletedMeeting } from "../apis/index";
 
 class Counter extends React.Component {
   state = {
@@ -76,6 +76,20 @@ class Counter extends React.Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const postData = {
+      meeting: { duration: this.state.count, cost: this.state.cost },
+    };
+    updateCompletedMeeting(this.state.details.meeting_id, postData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <>
@@ -93,9 +107,12 @@ class Counter extends React.Component {
                 </h1>
                 <h1 className="subtitle">Total Cost of meeting:</h1>
                 <h2 className="title">${this.state.cost.toFixed(2)}</h2>
-                <button className="button is-danger is-outlined my-3">
-                  End Meeting
-                </button>
+
+                <form onSubmit={this.handleSubmit}>
+                  <button className="button is-danger is-outlined my-3">
+                    End Meeting
+                  </button>
+                </form>
               </div>
             </section>
           </div>
