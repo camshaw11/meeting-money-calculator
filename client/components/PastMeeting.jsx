@@ -14,6 +14,7 @@ class PastMeeting extends React.Component {
 
   componentDidMount() {
     APIgetMeetingDetails(this.props.id).then((deets) => {
+      deets.cost = deets.cost.toFixed(2)
       this.setState({ details: deets });
     });
   }
