@@ -4,6 +4,7 @@ import { APIgetMeetingDetails } from "../apis/index";
 
 class Counter extends React.Component {
   state = {
+    cost: 0,
     details: [],
     startTime: 0,
     count: 0,
@@ -58,7 +59,9 @@ class Counter extends React.Component {
     if (this.state.details.cost) {
       const cost =
         (this.state.count / this.state.MSperhour) * this.state.hourlyRate;
-      console.log(cost);
+      this.setState({
+        cost,
+      });
     }
   };
 
@@ -75,9 +78,29 @@ class Counter extends React.Component {
 
   render() {
     return (
-      <p>
-        {this.state.hours}: {this.state.minutes}: {this.state.seconds}
-      </p>
+      <>
+        <div className="card">
+          <div className="card-conent">
+            <section className="section">
+              <div className="container">
+                <h1 className="title has-text-centered">Time elapsed:</h1>
+                <h1 className="subtitle">
+                  {this.state.hours}:
+                  {this.state.minutes.toString().length < 2 && 0}
+                  {this.state.minutes}:
+                  {this.state.seconds.toString().length < 2 && 0}
+                  {this.state.seconds}
+                </h1>
+                <h1 className="subtitle">Total Cost of meeting:</h1>
+                <h2 className="title">${this.state.cost.toFixed(2)}</h2>
+                <button className="button is-danger is-outlined my-3">
+                  End Meeting
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </>
     );
   }
 }
