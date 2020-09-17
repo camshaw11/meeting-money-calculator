@@ -20,7 +20,8 @@ applyAuthRoutes(router, {
 // Define meeting routes, enforce authentication and provide function if user authenticated
 //  METHOD | ROUTE              | Validate User     | Perform Function (next())
 router.get('/meetings', getTokenDecoder(), getUsersMeetingHistory)
-router.post('/meetings', getTokenDecoder(), saveCompletedMeeting)
+router.post('/meetings', getTokenDecoder(), saveCreatedMeeting)
+router.patch('/meetings/:id', getTokenDecoder(), updateCompletedMeeting)
 router.get('/meetings/:id', getTokenDecoder(), getMeetingDetails)
 router.get('/meetings/:id/users', getTokenDecoder(), getMeetingAttendees)
 router.get('/users', getTokenDecoder(), getAppUsers)
@@ -40,7 +41,7 @@ function getUsersMeetingHistory(req, res) {
 }
 
 
-// Save completed meeting saves provided data to the database
+// Save created meeting saves provided data to the database
 // Accepts a Meeting Object and an Array of Attendee ID's
 // Parses Posted data
 // Calls DB function to save Data
@@ -49,7 +50,7 @@ function getUsersMeetingHistory(req, res) {
 // Once complete calls DB function to get created meetings details, and
 // attendee Details and returns a detailed meeting Object with
 // an Array containing Attending Details embedded
-function saveCompletedMeeting(req, res) {
+function saveCreatedMeeting(req, res) {
   const meeting = req.body.meeting
   const attendees = req.body.attendees
   meeting.attendees = attendees.length
@@ -67,6 +68,31 @@ function saveCompletedMeeting(req, res) {
           })
       })
   })
+}
+
+
+// Update completed meeting saves provided data to the database
+// Accepts a Meeting Object and a meetingID provided in URL
+// Parses Posted data
+// Calls DB function to update Data
+// Once complete calls DB function to get created meetings details, and
+// attendee Details and returns a detailed meeting Object with
+// an Array containing Attending Details embedded 
+function updateCompletedMeeting(req, res) {
+  const meeting_id = req.params.id
+  const meeting = req.body.meeting
+
+  db.updateMeeting(meeting_id, meeting)
+    .then(() => {
+      db.getMeetingDetails(meeting_id)
+      .then(meeting => {
+        db.getAttendeeInfo(meeting_id)
+          .then(attendees => {
+            meeting.attendee_details = attendees
+            res.json(meeting)
+          })
+      })
+    })
 }
 
 // Calls DB function to get Meeting Details

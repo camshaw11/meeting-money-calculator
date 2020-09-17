@@ -1,3 +1,4 @@
+const { insert } = require('./connection')
 // Define DB Functions for Handling Meetings
 
 // Require Database configuration
@@ -12,7 +13,8 @@ module.exports = {
   getAllUsers,
   getMeetingDetails,
   getGraphData,
-  getUserGraphData
+  getUserGraphData,
+  updateMeeting
 }
 
 // Accepts Integer(UserId)
@@ -42,6 +44,14 @@ function getMeetingHistory (userId, db = connection) {
 // Inserts provided meeting into database, returns inserted records ID
 function saveMeeting (meeting, db = connection) {
   return db('meetings').insert(meeting)
+}
+
+// Accepts Integer(meetingId), Object(meeting) with details to be updated
+// Updates the meeting with the provided details with the provided meeting id
+function updateMeeting(meetingId, meeting, db=connection){
+  return db('meetings')
+    .where('id', meetingId)
+    .update(meeting)
 }
 
 // Accepts two variables Integer(meetingId) and Integer(attendeeId)
