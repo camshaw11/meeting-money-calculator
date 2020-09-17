@@ -31,10 +31,10 @@ export function APIgetUsers() {
 
 //post new meeting
 export function APIpostMeeting(meeting) {
-  return request.post(apiURL + "/meetings")
-  .send(meeting)
+  return request.post(apiUrl + "/meetings")
   .set(jsonHeader)
   .set(authHeader)
+  .send(meeting)
   .then(res => {
     return res.body
   })
