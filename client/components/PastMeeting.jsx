@@ -15,24 +15,31 @@ class PastMeeting extends React.Component {
     })
   }
 
+  /* <<<<<----- date conversion function for when seconds get passed through, will implement on friday----->>>>>
+    new Date(this.state.details.duration * 1000).toISOString().substr(11, 8)
+  */
+
   render() {
     return (
       <>
         <h2 className="title is-2">Meeting Details</h2>
         <div className="card">
-
-
           <header className="card-header">
             <h4 className="card-header-title">{this.state.details.meeting_name}</h4>
             <time className="card-header-title level-right" dateTime="">Date: {this.state.details.created_at}</time>
           </header>
           <div className="card-content">
-            <div className="content">
-              <p>Cost: ${this.state.details.cost}</p>
-              <p className="">Duration: {this.state.details.duration} hours</p>
-              <button className="button" onClick={() => this.props.dispatch(togglePage("list", 1))}>Hide</button>
+            <div className="columns is-vcentered">
+              <div className="column">
+                <h4 className="is-size-5">Cost: ${this.state.details.cost}</h4>
+              </div>
+              <div className="column">
+                <h4 className="is-size-5">Duration: {this.state.details.duration} hours</h4>
+              </div>
+              <div className="column">
+                <button className="button is-primary is-light" onClick={() => this.props.dispatch(togglePage("list", 1))}>Hide</button>
+              </div>
             </div>
-
           </div>
           <footer className="card-footer">
             {this.state.details.attendee_details &&
