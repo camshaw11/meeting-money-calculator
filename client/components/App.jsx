@@ -8,6 +8,7 @@ import Register from "./Register";
 import Nav from "./Nav";
 import Meeting from "./Meeting";
 import History from "./History";
+import Form from "./Form";
 import { checkAuth } from "../actions/auth";
 import Graph from './Graph'
 
@@ -42,6 +43,7 @@ export class App extends React.Component {
             <Route path="/register" component={Register} />
             <Route path="/meeting" component={Meeting} />
             <Route path="/history" component={History} />
+            <Route path="/form" component={Form} />
             <Route path="/graph"><Graph limit={false} /></Route>
           </div>
         </div>
