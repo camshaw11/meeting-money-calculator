@@ -10,7 +10,9 @@ module.exports = {
   saveAttendance,
   getAttendeeInfo,
   getAllUsers,
-  getMeetingDetails
+  getMeetingDetails,
+  getGraphData,
+  getUserGraphData
 }
 
 // Accepts Integer(UserId)
@@ -110,4 +112,27 @@ function getMeetingDetails (meeting_id, db = connection) {
     .first('attendees')
     .first('cost')
     .first('created_at')
+}
+
+// Queries DB to return all meetings in date order
+// Returns array of objects
+// [{ DateTime(created_at), Decimal(cost) }]
+function getGraphData(db=connection){
+  return db('meetings')
+    .orderBy('created_at', 'asc')
+    .select('created_at')
+    .select('cost')
+}
+
+// Accepts User ID
+// Queries DB to return all meetings in date order
+// Returns array of objects
+// [{ DateTime(created_at), Decimal(cost) }]
+function getUserGraphData(userId, db=connection){
+  return db('attendees')
+    .where('user_id', userId)
+    .join('meetings', 'attendees.meeting_id', 'meetings.id')
+    .orderBy('meetings.created_at', 'asc')
+    .select('meetings.created_at')
+    .select('meetings.cost')
 }

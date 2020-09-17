@@ -24,6 +24,8 @@ router.post('/meetings',          getTokenDecoder(), saveCompletedMeeting   )
 router.get('/meetings/:id',       getTokenDecoder(), getMeetingDetails      )
 router.get('/meetings/:id/users', getTokenDecoder(), getMeetingAttendees    )
 router.get('/users',              getTokenDecoder(), getAppUsers            )
+router.get('/graph',              getTokenDecoder(), getGraphData           )
+router.get('/graph/:limit',       getTokenDecoder(), getReducedGraphData    )
 
 // Define global error handler if any of the routes encounter a problem
 router.use(handleError)
@@ -95,12 +97,27 @@ function getAppUsers (req, res) {
   })
 }
 
+// Calls DB function to retrieve a list of all meetings with date and cost data
+function getGraphData(req, res){
+  db.getGraphData().then(data => {
+    res.json(data)
+  })
+}
+
+// Calls DB function to retrieve a list of logged in users meetings with date and cost data
+function getReducedGraphData(req, res){
+  db.getUserGraphData(req.user.id).then(data => {
+    res.json(data)
+  })
+}
+
 // Global Error Handler,
 // Validates if the error is due to user providing an incorrect token
 // or no token at all thus "Unauthorized"
 // Else assumes something went wrong on the server end.
 // Returns appropriate status alongside Object with Generic Message
 function handleError (err, req, res, next) {
+  console.error(err)
   if (err.name === 'UnauthorizedError') {
     res.status(401).json({ message: 'Access denied.' })
   }
