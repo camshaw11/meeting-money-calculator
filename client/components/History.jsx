@@ -45,7 +45,7 @@ class History extends React.Component {
                     </header>
                     <div className="card-content">
                       <div className="content">
-                        <button onClick={() => this.props.dispatch(togglePage("details", 1))}>Deetz</button>
+                        <button className="button" onClick={() => this.props.dispatch(togglePage("details", 1))}>Deetz</button>
                         <time dateTime="2016-1-1">{info.created_at}</time>
                       </div>
                     </div>
