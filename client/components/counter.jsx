@@ -84,6 +84,8 @@ class Counter extends React.Component {
     updateCompletedMeeting(this.state.details.meeting_id, postData)
       .then((res) => {
         console.log(res);
+        // return <Redirect to="/history" />;
+        this.props.redirect();
       })
       .catch((err) => {
         console.log(err);
