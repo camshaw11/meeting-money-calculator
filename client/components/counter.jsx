@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { APIgetMeetingDetails } from "../apis/index";
+import { APIgetMeetingDetails, updateCompletedMeeting } from "../apis/index";
 
 class Counter extends React.Component {
   state = {
@@ -19,9 +19,8 @@ class Counter extends React.Component {
 
   componentDidMount() {
     this.startTimer();
-
-    APIgetMeetingDetails(1).then((details) => {
-      const startTime = new Date(details.created_at).getTime();
+    APIgetMeetingDetails(this.props.id).then((details) => {
+      const startTime = (new Date(details.created_at).getTime());
       this.setState(
         {
           details: details,
@@ -34,7 +33,7 @@ class Counter extends React.Component {
 
   startTimer = () => {
     setInterval(() => {
-      const count = new Date().getTime() - this.state.startTime;
+      const count = new Date().getTime() - 43200000 - this.state.startTime;
       this.setState({
         count,
       });
@@ -55,25 +54,34 @@ class Counter extends React.Component {
     }, 1000);
   };
 
-  hourlyCost = () => {
-    if (this.state.details.cost) {
+  hourlyCost = () => {  
       const cost =
         (this.state.count / this.state.MSperhour) * this.state.hourlyRate;
       this.setState({
         cost,
       });
-    }
   };
 
   calcHourlyRate = () => {
     let hourlyRate = 0;
     this.state.details.attendee_details.map((attendee) => {
-      console.log(attendee);
       hourlyRate += attendee.hourly_wage;
     });
     this.setState({
       hourlyRate,
     });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const postData = {
+      meeting: { duration: this.state.count, cost: this.state.cost },
+    };
+    updateCompletedMeeting(this.state.details.meeting_id, postData)
+      .then((res) => {
+        this.props.redirect();
+      })
+      .catch((err) => err);
   };
 
   render() {
@@ -93,9 +101,12 @@ class Counter extends React.Component {
                 </h1>
                 <h1 className="subtitle">Total Cost of meeting:</h1>
                 <h2 className="title">${this.state.cost.toFixed(2)}</h2>
-                <button className="button is-danger is-outlined my-3">
-                  End Meeting
-                </button>
+
+                <form onSubmit={this.handleSubmit}>
+                  <button className="button is-danger is-outlined my-3">
+                    End Meeting
+                  </button>
+                </form>
               </div>
             </section>
           </div>
@@ -105,4 +116,8 @@ class Counter extends React.Component {
   }
 }
 
-export default Counter;
+function mapStateToProps(globalState) {
+  return { meeting: globalState.meeting };
+}
+
+export default connect(mapStateToProps)(Counter);
