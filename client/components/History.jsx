@@ -41,6 +41,12 @@ class History extends React.Component {
             this.props.page.currentPage === "list"
               ?
               <>
+                {this.state.details.length > 0 &&
+                  <>
+                    <h2 className="title is-2">Meeting Overview</h2>
+                    <Graph limit={true} />
+                  </>
+                }
                 <h2 className="title is-2">Meeting History</h2>
                 {meeting && meeting.map((info, i) => {
                   return (

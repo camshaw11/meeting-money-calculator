@@ -32,7 +32,7 @@ export class App extends React.Component {
             </div>
           </div>
 
-          <div className="">
+          <div className="bodyContent">
             {auth.isAuthenticated ? (
               <Route exact path="/" component={History} />
             ) : (
@@ -44,7 +44,12 @@ export class App extends React.Component {
             <Route path="/meeting" component={Meeting} />
             <Route path="/history" component={History} />
             <Route path="/form" component={Form} />
-            <Route path="/graph"><Graph limit={false} /></Route>
+            <Route path="/graph">
+              <>
+                <h1 className="title is-2">Company Wide Cost Analysis Graph</h1>
+                <Graph limit={false} />
+              </>  
+            </Route>
           </div>
         </div>
       </Router>
