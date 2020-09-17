@@ -31,19 +31,19 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-          {this.state.details.length > 0 &&
+          {/* {this.state.details.length > 0 &&
             <>
               <h2 className="title is-2 mt-5">Overview</h2>
               <Graph limit={true} />
             </>
-          }
+          } */}
           {
             this.props.page.currentPage === "list"
               ?
               <>
                 {this.state.details.length > 0 &&
                   <>
-                    <h2 className="title is-2">Meeting Overview</h2>
+                    <h2 className="title is-2 mt-5">Overview</h2>
                     <Graph limit={true} />
                   </>
                 }
