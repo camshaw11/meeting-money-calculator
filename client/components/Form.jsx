@@ -1,12 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {loginUser, loginError} from '../actions/auth'
-import { initUsers } from '../actions/users'
-import { APIgetUsers } from '../apis/'
+// import { initUsers } from '../actions/users'
+import { APIgetUsers, APIpostMeeting } from '../apis/'
 
 class Form extends React.Component {
   state = {
-    meetingName: '',
+    meeting: {
+      meetingName: '',
+      attendees: []
+    },
     users: [{first_name: '', last_name: ''}]
   }
 
@@ -29,8 +32,8 @@ class Form extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     let {username, password} = this.state
-    const confirmSuccess = () => { this.props.history.push('/') }
-    this.props.dispatch(loginUser({username, password}, confirmSuccess))
+    // const confirmSuccess = () => { this.props.history.push('/') }
+    // this.props.dispatch(loginUser({username, password}, confirmSuccess))
   }
   
   render() {
@@ -41,10 +44,10 @@ class Form extends React.Component {
         <hr />
         {auth.errorMessage && <span className="has-text-danger is-large">{auth.errorMessage}</span>}
         <label className="label is-large has-text-centered">Meeting Name</label>
-          <input required className="input has-text-centered is-large is-fullwidth" placeholder="Meeting Name" type="text" name="meetingName" autoComplete="yes" value={this.state.meetingName} onChange={this.handleChange}/>
+          <input required className="input has-text-centered is-large is-fullwidth" placeholder="Meeting Name" type="text" name="meetingName" autoComplete="yes" value={this.state.meeting.meetingName} onChange={this.handleChange}/>
         <div className="field">
           <div className="control">
-            
+            <label className="label is-large has-text-centered">Attendees</label>
             { this.state.users.map(user => { 
               return (
                 <label className="checkbox" key={`attendeeCheckbox ${user.user_id}`}>

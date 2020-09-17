@@ -18,8 +18,21 @@ export function APIgetMeetingDetails(id) {
     .catch(err => console.log(err))
 }
 
+//gets all users
 export function APIgetUsers() {
   return request.get(apiUrl + "/users")
+  .set(jsonHeader)
+  .set(authHeader)
+  .then(res => {
+    return res.body
+  })
+  .catch(err => console.log(err))
+}
+
+//post new meeting
+export function APIpostMeeting(meeting) {
+  return request.post(apiURL + "/meetings")
+  .send(meeting)
   .set(jsonHeader)
   .set(authHeader)
   .then(res => {
