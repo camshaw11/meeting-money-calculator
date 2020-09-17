@@ -32,7 +32,7 @@ function getMeetingHistory (userId, db = connection) {
   return db('attendees')
     .where('attendees.user_id', userId)
     .join('meetings', 'attendees.meeting_id', 'meetings.id')
-    .orderBy('meetings.created_at', 'asc')
+    .orderBy('meetings.created_at', 'desc')
     .select('attendees.meeting_id')
     .select('meetings.meeting_name')
     .select('meetings.attendees')
