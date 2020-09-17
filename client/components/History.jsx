@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import PastMeeting from "./PastMeeting"
+import Graph from "./Graph"
 
 import { APIgetPastMeetings } from '../apis/index.js'
 import { togglePage } from '../actions/auth.js'
@@ -27,7 +28,7 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-
+          <Graph limit={true} />
           {
             this.props.page.currentPage === "list"
               ?
