@@ -17,3 +17,20 @@
 @import "bulma/sass/layout/hero.sass";
 @import "bulma/sass/layout/section.sass";
 @import "bulma/sass/components/card.sass";
+@import "bulma/sass/components/modal.sass";
+
+// Graph Style
+
+.graph {
+  display: flex;
+  margin: 2em auto;
+  justify-content: center;
+  width: auto;
+}
+
+.custom-tooltip {
+  background-color: rgba(255,255,255,0.9);
+  border: solid 1px #00d1b2;
+  border-radius: 5px;
+  padding: 1em;
+}

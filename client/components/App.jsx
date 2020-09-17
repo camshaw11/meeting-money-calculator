@@ -1,6 +1,7 @@
 import React from "react";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Bulma from 'bulma'
 
 import Login from "./Login";
 import Register from "./Register";
@@ -9,10 +10,11 @@ import Meeting from "./Meeting";
 import History from "./History";
 import Form from "./Form";
 import { checkAuth } from "../actions/auth";
+import Graph from './Graph'
 
 export class App extends React.Component {
   componentDidMount() {
-    const confirmSuccess = () => {};
+    const confirmSuccess = () => { };
     this.props.dispatch(checkAuth(confirmSuccess));
   }
 
@@ -32,16 +34,17 @@ export class App extends React.Component {
 
           <div className="">
             {auth.isAuthenticated ? (
-              <Route exact path="/" component={Meeting} />
+              <Route exact path="/" component={History} />
             ) : (
-              <Route exact path="/" component={Login} />
-            )}
+                <Route exact path="/" component={Login} />
+              )}
 
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/meeting" component={Meeting} />
             <Route path="/history" component={History} />
             <Route path="/form" component={Form} />
+            <Route path="/graph"><Graph limit={false} /></Route>
           </div>
         </div>
       </Router>

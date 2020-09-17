@@ -1,3 +1,4 @@
+const { insert } = require('./connection')
 // Define DB Functions for Handling Meetings
 
 // Require Database configuration
@@ -10,7 +11,10 @@ module.exports = {
   saveAttendance,
   getAttendeeInfo,
   getAllUsers,
-  getMeetingDetails
+  getMeetingDetails,
+  getGraphData,
+  getUserGraphData,
+  updateMeeting
 }
 
 // Accepts Integer(UserId)
@@ -40,6 +44,14 @@ function getMeetingHistory (userId, db = connection) {
 // Inserts provided meeting into database, returns inserted records ID
 function saveMeeting (meeting, db = connection) {
   return db('meetings').insert(meeting)
+}
+
+// Accepts Integer(meetingId), Object(meeting) with details to be updated
+// Updates the meeting with the provided details with the provided meeting id
+function updateMeeting(meetingId, meeting, db=connection){
+  return db('meetings')
+    .where('id', meetingId)
+    .update(meeting)
 }
 
 // Accepts two variables Integer(meetingId) and Integer(attendeeId)
@@ -110,4 +122,27 @@ function getMeetingDetails (meeting_id, db = connection) {
     .first('attendees')
     .first('cost')
     .first('created_at')
+}
+
+// Queries DB to return all meetings in date order
+// Returns array of objects
+// [{ DateTime(created_at), Decimal(cost) }]
+function getGraphData(db=connection){
+  return db('meetings')
+    .orderBy('created_at', 'asc')
+    .select('created_at')
+    .select('cost')
+}
+
+// Accepts User ID
+// Queries DB to return all meetings in date order
+// Returns array of objects
+// [{ DateTime(created_at), Decimal(cost) }]
+function getUserGraphData(userId, db=connection){
+  return db('attendees')
+    .where('user_id', userId)
+    .join('meetings', 'attendees.meeting_id', 'meetings.id')
+    .orderBy('meetings.created_at', 'asc')
+    .select('meetings.created_at')
+    .select('meetings.cost')
 }
