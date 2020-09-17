@@ -20,8 +20,8 @@ class Counter extends React.Component {
   componentDidMount() {
     this.startTimer();
 
-    APIgetMeetingDetails(1).then((details) => {
-      const startTime = new Date(details.created_at).getTime();
+    APIgetMeetingDetails(this.props.meeting.meeting_id).then((details) => {
+      const startTime = new Date(details.created_at).getTime() + 43200;
       this.setState(
         {
           details: details,
@@ -124,4 +124,8 @@ class Counter extends React.Component {
   }
 }
 
-export default Counter;
+function mapStateToProps(globalState) {
+  return { meeting: globalState.meeting };
+}
+
+export default connect(mapStateToProps)(Counter);
