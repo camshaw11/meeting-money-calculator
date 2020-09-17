@@ -1,8 +1,7 @@
 import React from "react";
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import Bulma from 'bulma'
-
+import Bulma from "bulma";
 import Login from "./Login";
 import Register from "./Register";
 import Nav from "./Nav";
@@ -10,11 +9,11 @@ import Meeting from "./Meeting";
 import History from "./History";
 import Form from "./Form";
 import { checkAuth } from "../actions/auth";
-import Graph from './Graph'
+import Graph from "./Graph";
 
 export class App extends React.Component {
   componentDidMount() {
-    const confirmSuccess = () => { };
+    const confirmSuccess = () => {};
     this.props.dispatch(checkAuth(confirmSuccess));
   }
 
@@ -36,8 +35,8 @@ export class App extends React.Component {
             {auth.isAuthenticated ? (
               <Route exact path="/" component={History} />
             ) : (
-                <Route exact path="/" component={Login} />
-              )}
+              <Route exact path="/" component={Login} />
+            )}
 
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
@@ -48,7 +47,7 @@ export class App extends React.Component {
               <>
                 <h1 className="title is-2">Company Wide Cost Analysis Graph</h1>
                 <Graph limit={false} />
-              </>  
+              </>
             </Route>
           </div>
         </div>
