@@ -27,31 +27,35 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-          <h2 className="title is-2">Meeting history</h2>
 
           {
             this.props.page.currentPage === "list"
               ?
-              meeting && meeting.map((info, i) => {
-                return (
-                  <div className="card">
-                    <header className="card-header">
-                      <p className="card-header-title">{info.meeting_name}</p>
-                      <a href="#" className="card-header-icon" aria-label="more options">
-                        <span className="icon">
-                          <i className="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </a>
-                    </header>
-                    <div className="card-content">
-                      <div className="content">
-                        <button className="button" onClick={() => this.props.dispatch(togglePage("details", 1))}>Deetz</button>
-                        <time dateTime="2016-1-1">{info.created_at}</time>
+              <>
+                <h2 className="title is-2">Meeting History</h2>
+                {meeting && meeting.map((info, i) => {
+                  return (
+                    <div className="card">
+                      <header className="card-header">
+                        <p className="card-header-title">{info.meeting_name}</p>
+                        {/* <a href="#" className="card-header-icon" aria-label="more options">
+                          <span className="icon">
+                            <i className="fas fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </a> */}
+                      </header>
+                      <div className="card-content">
+                        <div className="content">
+                          <time dateTime="">Date: {info.created_at}</time>
+                        </div>
                       </div>
+                      <footer className="card-footer">
+                        <button className="button" onClick={() => this.props.dispatch(togglePage("details", 1))}>Details</button>
+                      </footer>
                     </div>
-                  </div>
-                )
-              })
+                  )
+                })}
+              </>
               :
               <PastMeeting id={this.props.page.currentId} />
 
