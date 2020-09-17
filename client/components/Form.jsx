@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {loginUser, loginError} from '../actions/auth'
-// import { initUsers } from '../actions/users'
+import { initMeeting } from '../actions/meeting'
 import { APIgetUsers, APIpostMeeting } from '../apis/'
 
 class Form extends React.Component {
@@ -14,13 +14,10 @@ class Form extends React.Component {
   componentDidMount(){
     APIgetUsers()
       .then(users=>{
-      //   (this.props.dispatch(initUsers(user)))
         this.setState({
              users: users
            })
-          console.log(this.state.users)
-        }
-        )
+        })
       }
 
   handleChange = (e) => {
@@ -46,7 +43,9 @@ class Form extends React.Component {
       }
       APIpostMeeting(postData)
         .then(meetingDetails => { 
-          console.log(meetingDetails)
+          // console.log(meetingDetails)
+          this.props.dispatch(initMeeting(meetingDetails))
+          this.props.history.push('/meeting')
         })
     // console.log(meeting)
   }
