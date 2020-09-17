@@ -19,6 +19,7 @@ export function APIgetMeetingDetails(id) {
     .catch((err) => console.log(err));
 }
 
+//gets all users
 export function APIgetUsers() {
   return request
     .get(apiUrl + "/users")
@@ -28,6 +29,18 @@ export function APIgetUsers() {
       return res.body;
     })
     .catch((err) => console.log(err));
+}
+
+//post new meeting
+export function APIpostMeeting(meeting) {
+  return request.post(apiUrl + "/meetings")
+  .set(jsonHeader)
+  .set(authHeader)
+  .send(meeting)
+  .then(res => {
+    return res.body
+  })
+  .catch(err => console.log(err))
 }
 
 // gets all past meetings by id
