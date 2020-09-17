@@ -19,9 +19,8 @@ class Counter extends React.Component {
 
   componentDidMount() {
     this.startTimer();
-
-    APIgetMeetingDetails(this.props.meeting.meeting_id).then((details) => {
-      const startTime = new Date(details.created_at).getTime() + 43200;
+    APIgetMeetingDetails(this.props.id).then((details) => {
+      const startTime = (new Date(details.created_at).getTime());
       this.setState(
         {
           details: details,
@@ -34,7 +33,7 @@ class Counter extends React.Component {
 
   startTimer = () => {
     setInterval(() => {
-      const count = new Date().getTime() - this.state.startTime;
+      const count = new Date().getTime() - 43200000 - this.state.startTime;
       this.setState({
         count,
       });
@@ -55,20 +54,17 @@ class Counter extends React.Component {
     }, 1000);
   };
 
-  hourlyCost = () => {
-    if (this.state.details.cost) {
+  hourlyCost = () => {  
       const cost =
         (this.state.count / this.state.MSperhour) * this.state.hourlyRate;
       this.setState({
         cost,
       });
-    }
   };
 
   calcHourlyRate = () => {
     let hourlyRate = 0;
     this.state.details.attendee_details.map((attendee) => {
-      console.log(attendee);
       hourlyRate += attendee.hourly_wage;
     });
     this.setState({
@@ -83,13 +79,9 @@ class Counter extends React.Component {
     };
     updateCompletedMeeting(this.state.details.meeting_id, postData)
       .then((res) => {
-        console.log(res);
-        // return <Redirect to="/history" />;
         this.props.redirect();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => err);
   };
 
   render() {

@@ -15,7 +15,7 @@ class Meeting extends React.Component {
         {/* <h2>the current count is: {count}</h2>
       <button onClick={Counter}>Click me</button> */}
 
-        <Counter redirect={this.redirectPage} />
+        <Counter redirect={this.redirectPage} id={this.props.match.params.id} />
       </div>
     );
   }
