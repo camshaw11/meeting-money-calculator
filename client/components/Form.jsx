@@ -1,36 +1,51 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {loginUser, loginError} from '../actions/auth'
-import { initUsers } from '../actions/users'
-import { APIgetUsers } from '../apis/'
+import { initMeeting } from '../actions/meeting'
+import { APIgetUsers, APIpostMeeting } from '../apis/'
 
 class Form extends React.Component {
   state = {
     meetingName: '',
+    attendees: [],
     users: [{first_name: '', last_name: ''}]
   }
 
   componentDidMount(){
     APIgetUsers()
       .then(users=>{
-      //   (this.props.dispatch(initUsers(user)))
         this.setState({
              users: users
            })
-          console.log(this.state.users)
-        }
-        )
+        })
       }
 
   handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+    this.setState({
+      meetingName: e.target.value,
+    })
   }
+  
+  handleCheckbox = (e) => {
+    this.setState({
+      attendees: [...this.state.attendees, e.target.value]
+    })
+  }
+
 
   handleSubmit = (e) => {
     e.preventDefault()
-    let {username, password} = this.state
-    const confirmSuccess = () => { this.props.history.push('/') }
-    this.props.dispatch(loginUser({username, password}, confirmSuccess))
+    let postData = {
+      meeting: {
+        meeting_name: this.state.meetingName
+      },
+      attendees: this.state.attendees
+      }
+      APIpostMeeting(postData)
+        .then(meetingDetails => { 
+          this.props.dispatch(initMeeting(meetingDetails))
+          this.props.history.push('/meeting/' + meetingDetails.meeting_id)
+        })
   }
   
   render() {
@@ -40,25 +55,28 @@ class Form extends React.Component {
         <h1 className="title is-2">Create A Meeting</h1>
         <hr />
         {auth.errorMessage && <span className="has-text-danger is-large">{auth.errorMessage}</span>}
-        <label className="label is-large has-text-centered">Meeting Name</label>
-          <input required className="input has-text-centered is-large is-fullwidth" placeholder="Meeting Name" type="text" name="meetingName" autoComplete="yes" value={this.state.meetingName} onChange={this.handleChange}/>
+        <label className="label is-large has-text-centered">
+          Meeting Name
+        </label>
+          <input required className="input has-text-centered is-large is-fullwidth" 
+          placeholder="Meeting Name" type="text" name={this.state.meetingName} autoComplete="yes" 
+          value={this.state.meetingName} onChange={this.handleChange}
+          />
         <div className="field">
           <div className="control">
-            
+            <label className="label is-large has-text-centered">Attendees</label>
             { this.state.users.map(user => { 
               return (
                 <label className="checkbox" key={`attendeeCheckbox ${user.user_id}`}>
-                  <input type="checkbox" value={user.user_id} name="attendees"/>
-                    {user.first_name} {user.last_name} 
+                  <input type="checkbox" value={user.user_id} name="attendees" onChange={this.handleCheckbox}/>
+                    <span className="checkbox-span p-3">{user.first_name} {user.last_name}</span> 
                 </label> 
-              )
-              }
+              )}
             )}
-            
           </div>  
         </div>  
     
-        <input className="button is-large is-fullwidth is-success" value='Login' type="submit" />
+        <input className="button is-large is-fullwidth is-success" value='Submit' type="submit" />
       </form>
     )
   }
