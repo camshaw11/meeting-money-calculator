@@ -54,25 +54,32 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <div className="graph">
-        <LineChart
-          width={600}
-          height={300}
-          data={this.state.data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <XAxis dataKey='date' domain={[0, 'dataMax']}/>
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip content={this.CustomTooltip} />
-          <Line
-            type="monotone"
-            dataKey="cost"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </div>
+      <>
+      {this.state.data.length > 0 &&
+        <div className="graph">
+          <LineChart
+            width={600}
+            height={300}
+            data={this.state.data}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey='date' domain={[0, 'dataMax']}/>
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip content={this.CustomTooltip} />
+            <Line
+              type="monotone"
+              dataKey="cost"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </div>
+      }
+      {!this.state.data.length > 0 &&
+        <h1>No meetings yet... The companies money is safe.</h1>
+      }
+      </>
     );
   }
 }

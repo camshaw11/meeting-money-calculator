@@ -28,17 +28,18 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-          {this.state.details.length > 0 &&
-            <>
-              <h2 className="title is-2">Meeting Overview</h2>
-              <Graph limit={true} />
-            </>
-          }
+          
 
           {
             this.props.page.currentPage === "list"
               ?
               <>
+                {this.state.details.length > 0 &&
+                  <>
+                    <h2 className="title is-2">Meeting Overview</h2>
+                    <Graph limit={true} />
+                  </>
+                }
                 <h2 className="title is-2">Meeting History</h2>
                 {meeting && meeting.map((info, i) => {
                   return (
@@ -49,7 +50,7 @@ class History extends React.Component {
                       </header>
                       <div className="card-content">
                         <div className="content">
-                          <button className="button" onClick={() => this.props.dispatch(togglePage("details", 1))}>Details</button>
+                          <button className="button" onClick={() => this.props.dispatch(togglePage("details", info.meeting_id))}>Details</button>
                         </div>
                       </div>
                       <footer className="card-footer">
