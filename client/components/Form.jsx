@@ -43,11 +43,9 @@ class Form extends React.Component {
       }
       APIpostMeeting(postData)
         .then(meetingDetails => { 
-          // console.log(meetingDetails)
           this.props.dispatch(initMeeting(meetingDetails))
-          this.props.history.push('/meeting')
+          this.props.history.push('/meeting/' + meetingDetails.meeting_id)
         })
-    // console.log(meeting)
   }
   
   render() {
@@ -71,10 +69,9 @@ class Form extends React.Component {
               return (
                 <label className="checkbox" key={`attendeeCheckbox ${user.user_id}`}>
                   <input type="checkbox" value={user.user_id} name="attendees" onChange={this.handleCheckbox}/>
-                    {user.first_name} {user.last_name} 
+                    <span className="checkbox-span p-3">{user.first_name} {user.last_name}</span> 
                 </label> 
-              )
-              }
+              )}
             )}
           </div>  
         </div>  
