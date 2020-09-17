@@ -7,7 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
+  Legend, ResponsiveContainer
 } from "recharts";
 
 import { getGraphDetails } from "../apis";
@@ -57,9 +57,9 @@ class Graph extends React.Component {
       <>
       {this.state.data.length > 0 &&
         <div className="graph">
+          <ResponsiveContainer height={300} width='100%'>
           <LineChart
-            width={600}
-            height={300}
+            className="detailGraph"
             data={this.state.data}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
@@ -74,6 +74,7 @@ class Graph extends React.Component {
               activeDot={{ r: 8 }}
             />
           </LineChart>
+          </ResponsiveContainer>
         </div>
       }
       {!this.state.data.length > 0 &&
