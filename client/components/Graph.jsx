@@ -40,7 +40,7 @@ class Graph extends React.Component {
 
   CustomTooltip =({ payload, label, active }) => {
     
-    if (active) {
+    if (active && payload[0].payload) {
       return (
         <div className="custom-tooltip">
           <p className="label">{`Date: ${payload[0].payload.date}`}</p>
