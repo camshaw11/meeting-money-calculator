@@ -28,7 +28,7 @@ class History extends React.Component {
     return (
       <>
         <div className="container" >
-          <Graph limit={true} />
+          {this.state.details.length > 0 && <Graph limit={true} />}
           {
             this.props.page.currentPage === "list"
               ?
