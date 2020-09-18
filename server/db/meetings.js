@@ -28,7 +28,7 @@ module.exports = {
 //    Decimal(cost), 
 //    DateTime(created_at)
 //  }
-function getMeetingHistory (userId, db = connection) {
+function getMeetingHistory(userId, db = connection) {
   return db('attendees')
     .where('attendees.user_id', userId)
     .join('meetings', 'attendees.meeting_id', 'meetings.id')
@@ -43,13 +43,13 @@ function getMeetingHistory (userId, db = connection) {
 
 // Accepts formatted meeting Object { String(meeting_name), Integer(duration), Integer(attendees), Decimal(cost) }
 // Inserts provided meeting into database, returns inserted records ID
-function saveMeeting (meeting, db = connection) {
+function saveMeeting(meeting, db = connection) {
   return db('meetings').insert(meeting).catch(err => err)
 }
 
 // Accepts Integer(meetingId), Object(meeting) with details to be updated
 // Updates the meeting with the provided details with the provided meeting id
-function updateMeeting(meetingId, meeting, db=connection){
+function updateMeeting(meetingId, meeting, db = connection) {
   return db('meetings')
     .where('id', meetingId)
     .update(meeting)
@@ -58,7 +58,7 @@ function updateMeeting(meetingId, meeting, db=connection){
 
 // Accepts two variables Integer(meetingId) and Integer(attendeeId)
 // Inserts attendance record into attendees table
-function saveAttendance (meetingId, attendeeId, db = connection) {
+function saveAttendance(meetingId, attendeeId, db = connection) {
   return db('attendees').insert({ meeting_id: meetingId, user_id: attendeeId }).catch(err => err)
 }
 
@@ -76,7 +76,7 @@ function saveAttendance (meetingId, attendeeId, db = connection) {
 //  },
 //  ...
 // ]
-function getAttendeeInfo (meetingId, db = connection) {
+function getAttendeeInfo(meetingId, db = connection) {
   return db('attendees')
     .where('attendees.meeting_id', meetingId)
     .join('users', 'attendees.user_id', 'users.id')
@@ -96,7 +96,7 @@ function getAttendeeInfo (meetingId, db = connection) {
 //    String(last_name),
 //    Decimal(hourly_wage)
 // }
-function getAllUsers (db = connection) {
+function getAllUsers(db = connection) {
   return db('users')
     .orderBy('first_name', 'asc')
     .select('id as user_id')
@@ -117,7 +117,7 @@ function getAllUsers (db = connection) {
 //    Decimal(cost)
 //    DateTime(created_at)
 // }
-function getMeetingDetails (meeting_id, db = connection) {
+function getMeetingDetails(meeting_id, db = connection) {
   return db('meetings')
     .where('id', meeting_id)
     .first('id as meeting_id')
@@ -135,7 +135,7 @@ function getMeetingDetails (meeting_id, db = connection) {
 // Queries DB to return all meetings in date order
 // Returns array of objects
 // [{ DateTime(created_at), Decimal(cost) }]
-function getGraphData(db=connection){
+function getGraphData(db = connection) {
   return db('meetings')
     .orderBy('created_at', 'asc')
     .select('created_at')
@@ -147,7 +147,7 @@ function getGraphData(db=connection){
 // Queries DB to return all meetings in date order
 // Returns array of objects
 // [{ DateTime(created_at), Decimal(cost) }]
-function getUserGraphData(userId, db=connection){
+function getUserGraphData(userId, db = connection) {
   return db('attendees')
     .where('user_id', userId)
     .join('meetings', 'attendees.meeting_id', 'meetings.id')

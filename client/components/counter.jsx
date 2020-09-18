@@ -15,12 +15,13 @@ class Counter extends React.Component {
     MSpermin: 60000,
     MSpersec: 1000,
     hourlyRate: 0,
+    notes: '',
   };
 
   componentDidMount() {
     this.startTimer();
     APIgetMeetingDetails(this.props.id).then((details) => {
-      const startTime = (new Date(details.created_at).getTime());
+      const startTime = new Date(details.created_at).getTime();
       this.setState(
         {
           details: details,
@@ -31,8 +32,12 @@ class Counter extends React.Component {
     });
   }
 
+  componentWillUnmount(){
+    clearInterval(this.state.interval)
+  }
+
   startTimer = () => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const count = new Date().getTime() - 43200000 - this.state.startTime;
       this.setState({
         count,
@@ -52,14 +57,15 @@ class Counter extends React.Component {
       this.setState({ seconds, minutes, hours });
       this.hourlyCost();
     }, 1000);
+    this.setState({interval})
   };
 
-  hourlyCost = () => {  
-      const cost =
-        (this.state.count / this.state.MSperhour) * this.state.hourlyRate;
-      this.setState({
-        cost,
-      });
+  hourlyCost = () => {
+    const cost =
+      (this.state.count / this.state.MSperhour) * this.state.hourlyRate;
+    this.setState({
+      cost,
+    });
   };
 
   calcHourlyRate = () => {
@@ -72,10 +78,16 @@ class Counter extends React.Component {
     });
   };
 
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const postData = {
-      meeting: { duration: this.state.count, cost: this.state.cost },
+      meeting: { duration: this.state.count, cost: this.state.cost, notes: this.state.notes },
     };
     updateCompletedMeeting(this.state.details.meeting_id, postData)
       .then((res) => {
@@ -103,6 +115,22 @@ class Counter extends React.Component {
                 <h2 className="title">${this.state.cost.toFixed(2)}</h2>
 
                 <form onSubmit={this.handleSubmit}>
+                  <div className="field">
+                    <div className="control">
+                      <div className="columns is-centered">
+                        <div className="column is-half">
+                          <textarea
+                            name="notes"
+                            type="text"
+                            className="textarea is-primary"
+                            placeholder="Meeting Details"
+                            rows="5"
+                            onChange={this.handleChange}
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <button className="button is-danger is-outlined my-3">
                     End Meeting
                   </button>
