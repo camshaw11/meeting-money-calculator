@@ -52,6 +52,7 @@ class Counter extends React.Component {
       this.setState({ seconds, minutes, hours });
       this.hourlyCost();
     }, 1000);
+    clearInterval(count);
   };
 
   hourlyCost = () => {
