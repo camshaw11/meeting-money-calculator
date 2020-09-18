@@ -55,6 +55,7 @@ function saveCreatedMeeting(req, res) {
   const meeting = req.body.meeting
   const attendees = req.body.attendees
   meeting.attendees = attendees.length
+  console.log(meeting, attendees)
 
   db.saveMeeting(meeting).then(([meeting_id]) => {
     const promises = attendees.map(attendee_id => {
