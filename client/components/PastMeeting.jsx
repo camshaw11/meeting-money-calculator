@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import moment from 'moment';
+import moment from "moment";
 moment().format();
 
 import { APIgetMeetingDetails } from "../apis/index.js";
@@ -14,7 +14,7 @@ class PastMeeting extends React.Component {
 
   componentDidMount() {
     APIgetMeetingDetails(this.props.id).then((deets) => {
-      deets.cost = deets.cost.toFixed(2)
+      deets.cost = deets.cost.toFixed(2);
       this.setState({ details: deets });
     });
   }
@@ -31,11 +31,14 @@ class PastMeeting extends React.Component {
             {this.state.details.created_at && (
               <time className="card-header-title level-right" dateTime="">
                 Date:{" "}
-                {new Date(this.state.details.created_at).toLocaleString("default", {
-                  dateStyle: "short",
-                  timeStyle: "short",
-                  hourCycle: "h12",
-                })}
+                {new Date(this.state.details.created_at).toLocaleString(
+                  "default",
+                  {
+                    dateStyle: "short",
+                    timeStyle: "short",
+                    hourCycle: "h12",
+                  }
+                )}
               </time>
             )}
           </header>
@@ -47,7 +50,8 @@ class PastMeeting extends React.Component {
               <div className="column">
                 <h4 className="is-size-5">
                   Duration:{" "}
-                  {this.state.details.duration && durationCalculator(this.state.details.duration)}
+                  {this.state.details.duration &&
+                    durationCalculator(this.state.details.duration)}
                 </h4>
               </div>
               <div className="column">
@@ -69,11 +73,15 @@ class PastMeeting extends React.Component {
                 </p>
               ))}
           </footer>
-        </div>
-        <div className="card">
-          <div className="card-content">
+
+          <div className="card-footer">
             {this.state.details.notes && (
-              <p>{this.state.details.notes}</p>
+              <div className="card-footer-item">
+                <div className="card-item">
+                  <p className="subtitle is-5">Meeting Notes</p>
+                  <p>{this.state.details.notes}</p>
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -83,8 +91,8 @@ class PastMeeting extends React.Component {
 }
 
 function durationCalculator(durationInMs) {
-  const duration = moment.duration(durationInMs, "milliseconds")
-  return moment.utc(duration.as("milliseconds")).format("HH:mm:ss")
+  const duration = moment.duration(durationInMs, "milliseconds");
+  return moment.utc(duration.as("milliseconds")).format("HH:mm:ss");
 }
 
 export default connect()(PastMeeting);

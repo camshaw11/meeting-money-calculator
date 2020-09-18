@@ -22,6 +22,7 @@ class Graph extends React.Component {
     getGraphDetails(limit)
       .then(data => {
         const formatted = data.map(entry => {
+          entry.cost = Number(entry.cost)
           entry.page = new Date(entry.created_at).toLocaleString('default', {
               month: "numeric",
               year: "numeric"
