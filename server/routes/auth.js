@@ -63,20 +63,24 @@ function saveCreatedMeeting(req, res) {
         .then(result => result)
         .catch(handleError)
     })
-    Promise.all(promises).then(() => {
-      db.getMeetingDetails(meeting_id)
-        .then(meeting => {
-          db.getAttendeeInfo(meeting_id)
-            .then(attendees => {
-              meeting.attendee_details = attendees
-              res.json(meeting)
-            })
-            .catch(handleError)
-        })
-        .catch(handleError)
-    })
+    Promise.all(promises)
+      .then(() => {
+        db.getMeetingDetails(meeting_id)
+          .then(meeting => {
+            db.getAttendeeInfo(meeting_id)
+              .then(attendees => {
+                meeting.attendee_details = attendees
+                res.json(meeting)
+              })
+              .catch(handleError)
+            }
+          )
+          .catch(handleError)
+        }
+      )
       .catch(handleError)
   })
+  .catch(handleError)
 }
 
 // Update completed meeting saves provided data to the database
