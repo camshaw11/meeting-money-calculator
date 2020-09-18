@@ -15,6 +15,7 @@ class Counter extends React.Component {
     MSpermin: 60000,
     MSpersec: 1000,
     hourlyRate: 0,
+    notes: '',
   };
 
   componentDidMount() {
@@ -52,7 +53,7 @@ class Counter extends React.Component {
       this.setState({ seconds, minutes, hours });
       this.hourlyCost();
     }, 1000);
-    clearInterval(count);
+    // clearInterval(count);
   };
 
   hourlyCost = () => {
@@ -73,10 +74,16 @@ class Counter extends React.Component {
     });
   };
 
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const postData = {
-      meeting: { duration: this.state.count, cost: this.state.cost },
+      meeting: { duration: this.state.count, cost: this.state.cost, notes: this.state.notes },
     };
     updateCompletedMeeting(this.state.details.meeting_id, postData)
       .then((res) => {
@@ -109,10 +116,12 @@ class Counter extends React.Component {
                       <div className="columns is-centered">
                         <div className="column is-half">
                           <textarea
+                            name="notes"
                             type="text"
                             className="textarea is-primary"
                             placeholder="Meeting Details"
                             rows="5"
+                            onChange={this.handleChange}
                           ></textarea>
                         </div>
                       </div>
