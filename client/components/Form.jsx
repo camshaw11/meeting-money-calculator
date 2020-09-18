@@ -43,6 +43,7 @@ class Form extends React.Component {
       }
       APIpostMeeting(postData)
         .then(meetingDetails => { 
+          console.log(meetingDetails)
           this.props.dispatch(initMeeting(meetingDetails))
           this.props.history.push('/meeting/' + meetingDetails.meeting_id)
         })
