@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { logoutUser } from '../actions/auth'
+import { togglePage, logoutUser } from '../actions/auth'
 
 class Nav extends React.Component {
   state = {
@@ -15,7 +15,7 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { auth, logout } = this.props
+    const { auth, logout, page } = this.props
     const { showBurger } = this.state
     return <nav className="navbar">
       <div className="container">
@@ -34,7 +34,7 @@ class Nav extends React.Component {
                 <>
                   <div className="navbar-start">
                     <Link className="navbar-item is-large" to='/form'>New Meeting</Link>
-                    <Link className="navbar-item is-large" to='/history'>Meeting History</Link>
+                    <Link onClick={() => page()} className="navbar-item is-large" to='/history'>Meeting History</Link>
                     <Link className="navbar-item is-large" to='/graph'>Graph</Link>
                   </div>
                   <div className="navbar-end">
@@ -63,13 +63,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     logout: () => {
       const confirmSuccess = () => ownProps.history.push('/')
       dispatch(logoutUser(confirmSuccess))
+    },
+    page: () => {
+      dispatch(togglePage("list", 1))
     }
   }
 }
 
 const mapStateToProps = ({ auth }) => {
   return {
-    auth
+    auth,
   }
 }
 
