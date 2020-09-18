@@ -27,11 +27,17 @@ class Form extends React.Component {
   }
   
   handleCheckbox = (e) => {
-    this.setState({
+    console.log(e.target)
+    console.log(e.target.checked)
+    if(e.target.checked === true){
+      this.setState({
       attendees: [...this.state.attendees, e.target.value]
-    })
-  }
-
+      })} else {
+        this.setState({
+          attendees: this.state.attendees.filter(attendee => !e.target.value)
+        })
+        }
+      }
 
   handleSubmit = (e) => {
     e.preventDefault()
