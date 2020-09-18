@@ -56,7 +56,7 @@ function saveCreatedMeeting(req, res) {
   const attendees = req.body.attendees
   meeting.attendees = attendees.length
 
-  return db.saveMeeting(meeting).then(([meeting_id]) => {
+  db.saveMeeting(meeting).then(([meeting_id]) => {
     const promises = attendees.map(attendee_id => {
       return db
         .saveAttendance(meeting_id, attendee_id)
@@ -64,7 +64,7 @@ function saveCreatedMeeting(req, res) {
         .catch(handleError)
     })
     Promise.all(promises).then(() => {
-      return db.getMeetingDetails(meeting_id)
+      db.getMeetingDetails(meeting_id)
         .then(meeting => {
           db.getAttendeeInfo(meeting_id)
             .then(attendees => {
