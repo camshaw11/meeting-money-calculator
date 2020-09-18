@@ -70,6 +70,13 @@ class PastMeeting extends React.Component {
               ))}
           </footer>
         </div>
+        <div className="card">
+          <div className="card-content">
+            {this.state.details.notes && (
+              <p>{this.state.details.notes}</p>
+            )}
+          </div>
+        </div>
       </>
     );
   }
