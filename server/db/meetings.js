@@ -44,7 +44,7 @@ function getMeetingHistory(userId, db = connection) {
 // Accepts formatted meeting Object { String(meeting_name), Integer(duration), Integer(attendees), Decimal(cost) }
 // Inserts provided meeting into database, returns inserted records ID
 function saveMeeting(meeting, db = connection) {
-  return db('meetings').insert(meeting).catch(err => err)
+  return db('meetings').insert(meeting)
 }
 
 // Accepts Integer(meetingId), Object(meeting) with details to be updated
