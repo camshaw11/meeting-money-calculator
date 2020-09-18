@@ -38,6 +38,7 @@ class Nav extends React.Component {
                     <Link className="navbar-item is-large" to='/graph'>Graph</Link>
                   </div>
                   <div className="navbar-end">
+                    <h1 className="navbar-item is-large">Welcome {auth.user.username}</h1>
                     <Link to='/' className="navbar-item is-large" onClick={() => logout()}>Logout</Link>
                   </div>
                 </>
@@ -73,6 +74,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const mapStateToProps = ({ auth }) => {
   return {
     auth,
+
   }
 }
 
