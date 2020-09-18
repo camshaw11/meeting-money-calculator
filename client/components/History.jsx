@@ -31,12 +31,6 @@ class History extends React.Component {
     return (
       <>
         <div className="container">
-          {/* {this.state.details.length > 0 &&
-            <>
-              <h2 className="title is-2 mt-5">Overview</h2>
-              <Graph limit={true} />
-            </>
-          } */}
           {this.props.page.currentPage === "list" ? (
             <>
               {this.state.details.length > 0 && (
@@ -60,7 +54,6 @@ class History extends React.Component {
                           {new Date(info.created_at).toLocaleString("default", {
                             dateStyle: "short",
                             timeStyle: "short",
-                            hourCycle: "h12"
                           })}
                         </time>
                       </header>
