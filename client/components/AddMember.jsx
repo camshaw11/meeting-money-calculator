@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { loginError, registerUserRequest } from '../actions/auth'
 
-class Register extends React.Component {
+class AddMember extends React.Component {
   state = {
     username: '',
     first_name: '',
@@ -34,8 +34,12 @@ class Register extends React.Component {
     const { auth } = this.props
     return (
       <form className="Register form box" onSubmit={this.handleSubmit}>
-        <h1 className="title is-2">Register</h1>
+
         <hr />
+        <label className="label is-large has-text-centered">
+          Add Member
+        </label>
+
         {auth.errorMessage && <span className="has-text-danger is-large">{auth.errorMessage}</span>}
         <label className="column is-6 is-offset-one-quarter label is-large has-text-centered">Username
           <input required className="input is-large has-text-centered is-fullwidth" placeholder="User Name" type="text" name="username" autoComplete="username" onChange={this.handleChange} value={this.state.username} />
@@ -62,7 +66,7 @@ class Register extends React.Component {
           <input required className="input is-large has-text-centered is-fullwidth" placeholder="Hourly Wage" name="hourly_wage" autoComplete="hourly_wage" onChange={this.handleChange} value={this.state.hourly_wage} />
         </label>
 
-        <input className="button is-success is-large is-fullwidth" value="Register" type="submit" />
+        <input className="button is-success is-large is-fullwidth" value="Add Member" type="submit" />
       </form>
     )
   }
@@ -74,4 +78,4 @@ const mapStateToProps = ({ auth }) => {
   }
 }
 
-export default connect(mapStateToProps)(Register)
+export default connect(mapStateToProps)(AddMember)
