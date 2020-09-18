@@ -32,8 +32,12 @@ class Counter extends React.Component {
     });
   }
 
+  componentWillUnmount(){
+    clearInterval(this.state.interval)
+  }
+
   startTimer = () => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const count = new Date().getTime() - 43200000 - this.state.startTime;
       this.setState({
         count,
@@ -53,7 +57,7 @@ class Counter extends React.Component {
       this.setState({ seconds, minutes, hours });
       this.hourlyCost();
     }, 1000);
-    // clearInterval(count);
+    this.setState({interval})
   };
 
   hourlyCost = () => {
