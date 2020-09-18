@@ -36,7 +36,6 @@ class PastMeeting extends React.Component {
                   {
                     dateStyle: "short",
                     timeStyle: "short",
-                    hourCycle: "h12",
                   }
                 )}
               </time>
