@@ -127,6 +127,8 @@ function getMeetingDetails(meeting_id, db = connection) {
     .first('cost')
     .first('created_at')
     .first('notes')
+    .first('max_duration')
+    .first('max_cost')
     .catch(err => err)
 }
 
